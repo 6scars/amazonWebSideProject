@@ -86,40 +86,22 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     console.log(cart);
 
 
+
+
+
+
+
+
+
+    let quantityCart=0;
+    cart.forEach((item)=>{
+      quantityCart += item.quantity;
+    });
+
+    document.querySelector('.js-cart-quantity').innerHTML = quantityCart;
   });
 });
 
-
-
-
-
-
-
-// document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
-//     button.addEventListener('click',()=>{
-//         let matchingItem;
-//         const productName = button.dataset.productName
-        
-//         //check is there the existing item
-//         cart.forEach((item)=>{
-//             if(item.productName === productName)
-//                 matchingItem = item;//<-- here is fucking object broooo :DDDD
-//         });
-
-        
-//         //add quantity or add new item to cart
-//         if(matchingItem){
-//             matchingItem.quantity++;
-//         }else{
-//             cart.push({
-//                 productName:productName,
-//                 quantity:1
-//             });
-
-//         };
-
-//     });
-// });
 
 
 
