@@ -1,4 +1,8 @@
+import {cart} from '../data/cart.js'
+
+
 let productsHtml = '';
+let timeoutId;
 products.forEach((content)=>{
     productsHtml+=`<div class="product-container">
           <div class="product-image-container">
@@ -94,9 +98,20 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     });
 
 
-
-    document.querySelector(`.product-${productId}`).classList.add('visible-added-sign');
+    const timeoutElement = document.querySelector(`.product-${productId}`)
+    timeoutElement.classList.add('visible-added-sign');
     
+    if(timeoutId){
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(()=>{
+        timeoutElement.classList.remove('visible-added-sign');
+      },2000);
+    }else{
+      timeoutId = setTimeout(()=>{
+        timeoutElement.classList.remove('visible-added-sign');
+      },2000);
+    }
+
     document.querySelector('.js-cart-quantity').innerHTML = quantityCart;
     
   });
