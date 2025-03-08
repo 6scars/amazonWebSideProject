@@ -38,9 +38,9 @@ products.forEach((content)=>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
-            <img src="images/icons/checkmark.png">
-            Added
+          <div class="added-to-cart product-${content.id}">
+              <img src="images/icons/checkmark.png">
+              Added
           </div>
 
           <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${content.id}"">
@@ -62,7 +62,7 @@ document.querySelector('.products-grid').innerHTML = productsHtml;
 document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
   button.addEventListener('click',()=>{
     const productId = button.dataset.productId;
-
+    
     
     let matchingItem=NaN;
     cart.forEach((thing)=>{
@@ -88,17 +88,17 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
 
 
 
-
-
-
-
-
     let quantityCart=0;
     cart.forEach((item)=>{
       quantityCart += item.quantity;
     });
 
+
+
+    document.querySelector(`.product-${productId}`).classList.add('visible-added-sign');
+    
     document.querySelector('.js-cart-quantity').innerHTML = quantityCart;
+    
   });
 });
 
