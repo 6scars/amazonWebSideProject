@@ -2,19 +2,19 @@ import {cart, removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 import {formatCurrency} from './utils/money.js'
-let cartSummaryHTML='';
+
 
 
 
 function displayCartSummary(){
-    document.querySelector('.js-order-summary').innerHTML = '';
+    let cartSummaryHTML='';
 
     cart.forEach((cartItem)=>{
         products.forEach((productsItem)=>{
             if(cartItem.id === productsItem.id){
     
                 cartSummaryHTML+= `
-                    <div class="cart-item-container">
+                    <div class="cart-item-container js-cart-item-container-${productsItem.id}">
                         <div class="delivery-date">
                             Delivery date: Tuesday, June 21
                         </div>
@@ -86,28 +86,43 @@ function displayCartSummary(){
             };
             
         });
+
     
     
     
     
        
     });
+
     
-    document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+iteringAddEventOnClick();
+
 }
+
+function removeContainer(ContainerId){
+    const container = document.querySelector(`.js-cart-item-container-${ContainerId}`);
+    container.remove();
+}
+
+function iteringAddEventOnClick(){
+    let deleteLinkElements = document.querySelectorAll('.js-delete-link');
+    deleteLinkElements.forEach((deleteElement)=>{
+        deleteElement.addEventListener('click',()=>{
+            let dataIdElement = deleteElement.dataset.deleteId;
+    
+            removeFromCart(dataIdElement);
+            removeContainer(dataIdElement);
+
+        });
+        
+    });
+};
+
+
 displayCartSummary();
 
 
 
-let deleteLinkElements = document.querySelectorAll('.js-delete-link');
-deleteLinkElements.forEach((deleteElement)=>{
-    deleteElement.addEventListener('click',()=>{
-        let dataIdElement = deleteElement.dataset.deleteId;
 
-        removeFromCart(dataIdElement);
-        console.log(cart);
-        displayCartSummary();
-    });
-    
-});
 
