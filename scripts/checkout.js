@@ -11,7 +11,8 @@ function displayCartSummary(){
 
     cart.forEach((cartItem)=>{
         products.forEach((productsItem)=>{
-            if(cartItem.id === productsItem.id){
+            if(cartItem.productId === productsItem.id){
+                
     
                 cartSummaryHTML+= `
                     <div class="cart-item-container js-cart-item-container-${productsItem.id}">
@@ -36,7 +37,7 @@ function displayCartSummary(){
                             <span class="update-quantity-link link-primary">
                                 Update
                             </span>
-                            <span class="delete-quantity-link link-primary js-delete-link" data-delete-id=${cartItem.id}>
+                            <span class="delete-quantity-link link-primary js-delete-link" data-delete-id=${cartItem.productId}>
                                 Delete
                             </span>
                             </div>
@@ -86,22 +87,20 @@ function displayCartSummary(){
             };
             
         });
-
-    
-    
-    
-    
-       
+   
     });
 
     
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
 iteringAddEventOnClick();
 
 }
 
 function removeContainer(ContainerId){
     const container = document.querySelector(`.js-cart-item-container-${ContainerId}`);
+
+    console.log(container);
     container.remove();
 }
 
