@@ -20,10 +20,10 @@ function displayCartSummary(){
     
                         <div class="cart-item-details">
                             <div class="product-name">
-                                Black and Gray Athletic Cotton Socks - 6 Pairs
+                                ${productsItem.name}
                             </div>
                             <div class="product-price">
-                                $10.90
+                                $${(productsItem.priceCents/100).toFixed(2)}
                             </div>
                             <div class="product-quantity">
                             <span>
