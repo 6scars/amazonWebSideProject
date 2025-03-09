@@ -84,7 +84,7 @@ document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     addToCart(productId);
     updateCartQuantity();
 
-
+ 
     const timeoutElement = document.querySelector(`.product-${productId}`)
     timeoutElement.classList.add('visible-added-sign');
     
