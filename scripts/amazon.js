@@ -1,6 +1,8 @@
 import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
+import {updateCartQuantity} from './utils/quantity.js';
+
 
 
 let productsHtml = '';
@@ -54,56 +56,47 @@ products.forEach((content)=>{
         </div>`;
 });
 
-document.querySelector('.products-grid').innerHTML = productsHtml;
-
-
-// document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
-//     button.addEventListener(()=>{
-//         cart.push(dataset)
-//     })
-// });
 
 
 
 
-function updateCartQuantity(){
-  let quantityCart=0;
-    cart.forEach((cartItem)=>{
-      quantityCart += cartItem.quantity;
+
+function addEventToButtons(){document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+    button.addEventListener('click',()=>{
+      const productId = button.dataset.productId;
+
+      addToCart(productId);
+      document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
+
+  
+      const timeoutElement = document.querySelector(`.product-${productId}`)
+      timeoutElement.classList.add('visible-added-sign');
+      
+      if(timeoutId){
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(()=>{
+          timeoutElement.classList.remove('visible-added-sign');
+        },2000);
+      }else{
+        timeoutId = setTimeout(()=>{
+          timeoutElement.classList.remove('visible-added-sign');
+        },2000);
+      }
+
+      
+      
     });
-    document.querySelector('.js-cart-quantity').innerHTML = quantityCart;
-}
-
-
-
-
-document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
-  button.addEventListener('click',()=>{
-    const productId = button.dataset.productId;
-
-    addToCart(productId);
-    updateCartQuantity();
-
- 
-    const timeoutElement = document.querySelector(`.product-${productId}`)
-    timeoutElement.classList.add('visible-added-sign');
-    
-    if(timeoutId){
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(()=>{
-        timeoutElement.classList.remove('visible-added-sign');
-      },2000);
-    }else{
-      timeoutId = setTimeout(()=>{
-        timeoutElement.classList.remove('visible-added-sign');
-      },2000);
-    }
-
-    
-    
   });
-});
+};
 
+
+
+
+
+
+document.querySelector('.products-grid').innerHTML = productsHtml;
+document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
+addEventToButtons();
 
 
 

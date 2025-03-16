@@ -1,8 +1,5 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) 
 
-console.log(Array.isArray(cart));
-console.log(cart.length);
-
 if(!cart.length){
   cart = [{
     productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
