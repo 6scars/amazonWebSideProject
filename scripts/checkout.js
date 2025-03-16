@@ -32,11 +32,16 @@ function displayCartSummary(){
                             </div>
                             <div class="product-quantity">
                             <span>
-                                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                                Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
                             </span>
-                            <span class="update-quantity-link link-primary">
+                            <span class="update-quantity-link link-primary js-update-quantity-link " data-product-id-quantity=${cartItem.productId}>
                                 Update
                             </span>
+                            <input class='quantity-input js-quantity-input'>
+                                <span class="save-quantity-link link-primary js-save-quantity-link" data-save-prod-id = ${cartItem.productId}>
+                                    save
+                                </span>
+                            </input>
                             <span class="delete-quantity-link link-primary js-delete-link" data-delete-id=${cartItem.productId}>
                                 Delete
                             </span>
@@ -115,11 +120,73 @@ function iteringAddEventOnClick(){
 };
 
 
+function iteringAddEventOnClickUpdateQuantity(){
+    const updateElements = document.querySelectorAll('.js-update-quantity-link');
+
+    function update(event){
+        let updateItem = event.currentTarget;
+        let itemContainer= document.querySelector(`.js-cart-item-container-${updateItem.dataset.productIdQuantity}`);
+        itemContainer.classList.add('is-editing-quantity');
+        console.log(itemContainer);
+    }
+
+    updateElements.forEach((updateItem)=>{
+        updateItem.addEventListener('click',update);
+    });
+};
+
+
+
+function iteringAddEventOnClickSaveQuantity(){
+    const saveLink = document.querySelectorAll('.js-save-quantity-link');
+
+    function removeClass(event){
+        let saveLinkItem = event.currentTarget;
+        let prodId = saveLinkItem.dataset.saveProdId;
+        const itemElement = document.querySelector(`.js-cart-item-container-${prodId}`);
+        itemElement.classList.remove('is-editing-quantity');
+        console.log(event);
+    };
+
+    function saveQuantity(event){
+        let saveLinkItem = event.currentTarget;
+        let prodId = saveLinkItem.dataset.saveProdId;
+
+        let containerElement = document.querySelector(`.js-cart-item-container-${prodId}`);
+        let inputElement = containerElement.querySelector('.js-quantity-input');
+
+        const quantity = Number(inputElement.value);
+        overwriteQuantityInCart(prodId, containerElement, quantity);
+    };
+
+
+
+    function overwriteQuantityInCart(prodId, containerElement, quantity){
+        cart.forEach((cartItem)=>{
+            if(cartItem.productId === prodId){
+                cartItem.quantity = quantity;
+                
+                let quantityOfItems = containerElement.querySelector('.js-quantity-label');
+                quantityOfItems.innerHTML = quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+            };
+        });
+    };
+
+
+
+    saveLink.forEach((saveLinkItem)=>{
+        saveLinkItem.addEventListener('click',removeClass);
+        saveLinkItem.addEventListener('click',saveQuantity);
+    });
+};
+
+
 
 
 
 function displayQuantityInHeader(){
-    
     document.querySelector('.js-return-to-home-link').innerHTML = `${updateCartQuantity()}`;
 
 }
@@ -132,7 +199,8 @@ function displayQuantityInHeader(){
 displayCartSummary();
 iteringAddEventOnClick();
 displayQuantityInHeader();
-
+iteringAddEventOnClickUpdateQuantity();
+iteringAddEventOnClickSaveQuantity();
 
 
 
