@@ -1,4 +1,4 @@
-import {cart, removeFromCart} from '../data/cart.js';
+import {cart, removeFromCart, overwriteQuantityInCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import {updateCartQuantity} from './utils/quantity.js';
@@ -32,12 +32,12 @@ function displayCartSummary(){
                             </div>
                             <div class="product-quantity">
                             <span>
-                                Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
+                                Quantity: <span class="quantity-label js-quantity-label" data-product-id-quantity=${cartItem.productId} >${cartItem.quantity}</span>
                             </span>
                             <span class="update-quantity-link link-primary js-update-quantity-link " data-product-id-quantity=${cartItem.productId}>
                                 Update
                             </span>
-                            <input class='quantity-input js-quantity-input'>
+                            <input class='quantity-input js-quantity-input' data-product-id-input=${cartItem.productId}>
                                 <span class="save-quantity-link link-primary js-save-quantity-link" data-save-prod-id = ${cartItem.productId}>
                                     save
                                 </span>
@@ -139,47 +139,99 @@ function iteringAddEventOnClickUpdateQuantity(){
 
 function iteringAddEventOnClickSaveQuantity(){
     const saveLink = document.querySelectorAll('.js-save-quantity-link');
+    const quantityInputElements = document.querySelectorAll('.js-quantity-input');
 
+
+    //on click
     function removeClass(event){
         let saveLinkItem = event.currentTarget;
         let prodId = saveLinkItem.dataset.saveProdId;
         const itemElement = document.querySelector(`.js-cart-item-container-${prodId}`);
         itemElement.classList.remove('is-editing-quantity');
-        console.log(event);
     };
+
 
     function saveQuantity(event){
         let saveLinkItem = event.currentTarget;
         let prodId = saveLinkItem.dataset.saveProdId;
-
         let containerElement = document.querySelector(`.js-cart-item-container-${prodId}`);
         let inputElement = containerElement.querySelector('.js-quantity-input');
+        console.log(prodId);
+
 
         const quantity = Number(inputElement.value);
+
+        if(!(quantity > 0  && quantity < 1000))
+            return;
+
         overwriteQuantityInCart(prodId, containerElement, quantity);
+        displayQuantityInHeader(); 
+        
     };
 
 
 
-    function overwriteQuantityInCart(prodId, containerElement, quantity){
-        cart.forEach((cartItem)=>{
-            if(cartItem.productId === prodId){
-                cartItem.quantity = quantity;
+
+
+
+
+
+
+    //on Enter
+    function removeClassTwo(event){
+        if(event.key === "Enter"){
+            let saveLinkItem = event.currentTarget;
+            let prodId = saveLinkItem.dataset.productIdInput;
+            const itemElement = document.querySelector(`.js-cart-item-container-${prodId}`);
+            itemElement.classList.remove('is-editing-quantity');
+        };
+
+    };
+
+    function saveQuantityOnEnter(event){
+        console.log(event.key)
+            if(event.key === "Enter"){
+                let saveInputItem = event.currentTarget;
+                let prodId = saveInputItem.dataset.productIdInput;
+                let containerElement = document.querySelector(`.js-cart-item-container-${prodId}`);
                 
-                let quantityOfItems = containerElement.querySelector('.js-quantity-label');
-                quantityOfItems.innerHTML = quantity;
-                localStorage.setItem('cart', JSON.stringify(cart));
+                const quantity = Number(saveInputItem.value);
 
+                if(!(quantity > 0  && quantity < 1000))
+                    return;
+
+                overwriteQuantityInCart(prodId, containerElement, quantity);
+                displayQuantityInHeader(); 
             };
-        });
     };
+
+    
+
+
+    
+
+
+
+
+
+
+
+
+
 
 
 
     saveLink.forEach((saveLinkItem)=>{
         saveLinkItem.addEventListener('click',removeClass);
         saveLinkItem.addEventListener('click',saveQuantity);
+        
     });
+
+    quantityInputElements.forEach((inputItem)=>{
+       inputItem.addEventListener('keydown',saveQuantityOnEnter);
+       inputItem.addEventListener('keydown',removeClassTwo);
+    });
+    
 };
 
 

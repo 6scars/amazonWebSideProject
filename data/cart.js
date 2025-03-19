@@ -61,3 +61,16 @@ export function removeFromCart(dataIdElement){
 export function saveToStorage(){
   localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+export function overwriteQuantityInCart(prodId, containerElement, quantity){
+  cart.forEach((cartItem)=>{
+      if(cartItem.productId === prodId){
+          cartItem.quantity = quantity;
+          
+          let quantityOfItems = containerElement.querySelector('.js-quantity-label');
+          quantityOfItems.innerHTML = quantity;
+          localStorage.setItem('cart', JSON.stringify(cart));
+
+      };
+  });
+};
