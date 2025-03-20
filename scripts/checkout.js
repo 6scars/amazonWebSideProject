@@ -1,4 +1,4 @@
-import {cart, removeFromCart, overwriteQuantityInCart} from '../data/cart.js';
+import {cart, removeFromCart, overwriteQuantityInCart, updateDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import formatCurrency from './utils/money.js';
 import {updateCartQuantity} from './utils/quantity.js';
@@ -18,6 +18,7 @@ function displayCartSummary(){
             if(cartItem.productId === productsItem.id){
                 
     
+            
                 //delivery calc for header
                 const cartDeliveryOptionId = cartItem.deliveryOptionId;
                 let matchingDeliveryOption;
@@ -31,6 +32,7 @@ function displayCartSummary(){
                 const today = dayjs();
                 const deliveryDate = today.add(matchingDeliveryOption, 'days');
                 const dateString = deliveryDate.format('dddd, MMMM, D' );
+
 
 
 
@@ -104,7 +106,9 @@ function deliveryOptionHTML(productsItem,cart){
 
         html += 
         `
-                <div class="delivery-option">
+                <div class="delivery-option js-delivery-option"
+                    data-product-id="${productsItem.id}"
+                    data-delivery-option-id="${option.id}">
                     <input type="radio" ${isChecked ? 'checked': ''} class="delivery-option-input" name="delivery-option-${productsItem.id}">
                 <div>
                 <div class="delivery-option-date">
@@ -250,13 +254,6 @@ function iteringAddEventOnClickSaveQuantity(){
 
 
 
-
-
-
-
-
-
-
     saveLink.forEach((saveLinkItem)=>{
         saveLinkItem.addEventListener('click',removeClass);
         saveLinkItem.addEventListener('click',saveQuantity);
@@ -277,8 +274,18 @@ function iteringAddEventOnClickSaveQuantity(){
 function displayQuantityInHeader(){
     document.querySelector('.js-return-to-home-link').innerHTML = `${updateCartQuantity()}`;
 
-}
+};
     
+function iteringAddEventOnClickDate(){
+    document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+        element.addEventListener('click',()=>{
+            const {productId, deliveryOptionId} = element.dataset;
+            updateDeliveryOption(productId, deliveryOptionId);
+            console.log(cart);
+        });
+    });
+};
+
 
 
 
@@ -289,7 +296,7 @@ iteringAddEventOnClick();
 displayQuantityInHeader();
 iteringAddEventOnClickUpdateQuantity();
 iteringAddEventOnClickSaveQuantity();
-
+iteringAddEventOnClickDate()
 
 
 
