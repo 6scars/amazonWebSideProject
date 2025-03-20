@@ -131,14 +131,6 @@ function deliveryOptionHTML(productsItem,cart){
 
 
 
-
-
-
-
-
-
-
-
 function removeContainer(ContainerId){
     const container = document.querySelector(`.js-cart-item-container-${ContainerId}`);
     container.remove();
@@ -281,7 +273,7 @@ function iteringAddEventOnClickDate(){
         element.addEventListener('click',()=>{
             const {productId, deliveryOptionId} = element.dataset;
             updateDeliveryOption(productId, deliveryOptionId);
-            console.log(cart);
+            displayCartSummary();
         });
     });
 };

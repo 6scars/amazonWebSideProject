@@ -56,9 +56,6 @@ export function removeFromCart(dataIdElement){
   });
   cart = newCart;
 
-
-
-
   saveToStorage();
 };
 
