@@ -3,8 +3,7 @@ import {products} from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import {updateCartQuantity} from '../utils/quantity.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import {deliveryOptions} from '../../data/deliveryOptions.js';
-
+import {deliveryOptions, getDeliveryOptionOb} from '../../data/deliveryOptions.js';
 
 
 
@@ -22,16 +21,14 @@ function displayCartSummary(){
             
                 //delivery calc for header
                 const cartDeliveryOptionId = cartItem.deliveryOptionId;
-                let matchingDeliveryOption;
-                deliveryOptions.forEach((option)=>{
-                    if(option.id === cartDeliveryOptionId){
-                        matchingDeliveryOption = option.deliveryDays
-                    }
-                         
-                });
+                const matchingDeliveryOption = getDeliveryOptionOb(cartDeliveryOptionId);
                 
+                
+
+                //format date
+                const dayForDeliver = matchingDeliveryOption.deliveryDays
                 const today = dayjs();
-                const deliveryDate = today.add(matchingDeliveryOption, 'days');
+                const deliveryDate = today.add(dayForDeliver, 'days');
                 const dateString = deliveryDate.format('dddd, MMMM, D' );
 
 

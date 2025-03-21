@@ -1,3 +1,16 @@
+export function loopCartProd(productId){
+    let matchingProduct;
+
+        products.forEach((productItem)=>{
+            if(productId === productItem.id){
+                matchingProduct = productItem;
+            };
+        });
+    return matchingProduct;
+};
+
+
+
 
 export const products = [
   {
