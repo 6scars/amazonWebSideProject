@@ -1,4 +1,4 @@
-export let cart = JSON.parse(localStorage.getItem('cart')) 
+export let cart = JSON.parse(localStorage.getItem('cart')) ;
 
 
 console.log(cart);
@@ -62,6 +62,8 @@ export function removeFromCart(dataIdElement){
 
 export function saveToStorage(){
   localStorage.setItem('cart', JSON.stringify(cart));
+  cart = JSON.parse(localStorage.getItem('cart'));
+
 }
 
 export function overwriteQuantityInCart(prodId, containerElement, quantity){
