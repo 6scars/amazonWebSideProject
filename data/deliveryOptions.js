@@ -5,7 +5,7 @@ export function getDeliveryOptionOb(cartDeliveryOptionId){
             if(option.id === cartDeliveryOptionId)
                 matchingDeliveryOption = option;
             });
-            console.log(matchingDeliveryOption)
+
     return matchingDeliveryOption;
 
 }

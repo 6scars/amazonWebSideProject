@@ -2,13 +2,11 @@ import {cart, removeFromCart, overwriteQuantityInCart, updateDeliveryOption} fro
 import {products} from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import {updateCartQuantity} from '../utils/quantity.js';
+import isSatSun from '../utils/dates.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import {deliveryOptions, getDeliveryOptionOb} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
-
-
-
-
+isSatSun();
 
 
 function displayCartSummary(){
@@ -126,32 +124,22 @@ function deliveryOptionHTML(productsItem,cart){
 }
 
 
+function iteringAddEventOnClickDelete(){
+    document.querySelector('.js-order-summary').addEventListener('click',(event)=>{
+        if(event.target.classList.contains('js-delete-link')){
+            let dataIdElement = event.target.dataset.deleteId;
 
-
-
-
-
-function removeContainer(ContainerId){
-    const container = document.querySelector(`.js-cart-item-container-${ContainerId}`);
-    container.remove();
-}
-
-function iteringAddEventOnClick(){
-    let deleteLinkElements = document.querySelectorAll('.js-delete-link');
-    deleteLinkElements.forEach((deleteElement)=>{
-        deleteElement.addEventListener('click',()=>{
-            let dataIdElement = deleteElement.dataset.deleteId;
-    
             removeFromCart(dataIdElement);
-            removeContainer(dataIdElement);
+            displayCartSummary();
             displayQuantityInHeader();
             renderPaymentSummary();
+            reattachEventListeners();
 
-
-        });
-        
+        }
     });
 };
+
+
 
 
 function iteringAddEventOnClickUpdateQuantity(){
@@ -273,7 +261,7 @@ function displayQuantityInHeader(){
 };
 
 function reattachEventListeners() {
-    iteringAddEventOnClick();
+    iteringAddEventOnClickDelete();
     iteringAddEventOnClickUpdateQuantity();
     iteringAddEventOnClickSaveQuantity();
     iteringAddEventOnClickDate(); // Ważne! Ponownie przypisz eventy do opcji dostawy
@@ -296,7 +284,7 @@ function iteringAddEventOnClickDate(){
 
 export function mainHTML(){
     displayCartSummary();
-    iteringAddEventOnClick();
+    iteringAddEventOnClickDelete();
     displayQuantityInHeader();
     iteringAddEventOnClickUpdateQuantity();
     iteringAddEventOnClickSaveQuantity();
