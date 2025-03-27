@@ -6,6 +6,7 @@ import isSatSun from '../utils/dates.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import {deliveryOptions, getDeliveryOptionOb} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
+import {renderCheckoutHeader} from './checkoutHeader.js';
 isSatSun();
 
 
@@ -256,7 +257,7 @@ function iteringAddEventOnClickSaveQuantity(){
 
 
 function displayQuantityInHeader(){
-    document.querySelector('.js-return-to-home-link').innerHTML = `${updateCartQuantity()}`;
+    renderCheckoutHeader();
 
 };
 
