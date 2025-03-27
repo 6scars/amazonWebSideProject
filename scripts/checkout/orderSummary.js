@@ -4,6 +4,8 @@ import formatCurrency from '../utils/money.js';
 import {updateCartQuantity} from '../utils/quantity.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 import {deliveryOptions, getDeliveryOptionOb} from '../../data/deliveryOptions.js';
+import {renderPaymentSummary} from './paymentSummary.js';
+
 
 
 
@@ -143,6 +145,8 @@ function iteringAddEventOnClick(){
             removeFromCart(dataIdElement);
             removeContainer(dataIdElement);
             displayQuantityInHeader();
+            renderPaymentSummary();
+
 
         });
         
@@ -196,6 +200,7 @@ function iteringAddEventOnClickSaveQuantity(){
 
         overwriteQuantityInCart(prodId, containerElement, quantity);
         displayQuantityInHeader(); 
+        renderPaymentSummary();
         
     };
 
@@ -232,6 +237,7 @@ function iteringAddEventOnClickSaveQuantity(){
 
                 overwriteQuantityInCart(prodId, containerElement, quantity);
                 displayQuantityInHeader(); 
+                renderPaymentSummary();
             };
     };
 
@@ -281,6 +287,7 @@ function iteringAddEventOnClickDate(){
             updateDeliveryOption(productId, deliveryOptionId);
             displayCartSummary();
             reattachEventListeners();
+            renderPaymentSummary();
         });
     });
 };
