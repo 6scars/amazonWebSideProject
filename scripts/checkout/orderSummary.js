@@ -4,7 +4,7 @@ import formatCurrency from '../utils/money.js';
 import {updateCartQuantity} from '../utils/quantity.js';
 import isSatSun from '../utils/dates.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
-import {deliveryOptions, getDeliveryOptionOb} from '../../data/deliveryOptions.js';
+import {deliveryOptions, getDeliveryOptionOb, calculateDeliveryDate} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
 import {renderCheckoutHeader} from './checkoutHeader.js';
 isSatSun();
@@ -92,9 +92,7 @@ function displayCartSummary(){
 function deliveryOptionHTML(productsItem,cart){
     let html = ''
     deliveryOptions.forEach((option)=>{
-        const today = dayjs();
-        const deliveryDate = today.add(option.deliveryDays, 'days');
-        const dateString = deliveryDate.format('dddd, MMMM, D' );
+        const dateString = calculateDeliveryDate(option);
 
         const price = `$${formatCurrency(option.priceCents)}` || 'FREE';
 

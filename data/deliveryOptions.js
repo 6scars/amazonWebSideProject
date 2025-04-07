@@ -1,16 +1,3 @@
-export function getDeliveryOptionOb(cartDeliveryOptionId){
-    let matchingDeliveryOption;
-
-        deliveryOptions.forEach((option)=>{
-            if(option.id === cartDeliveryOptionId)
-                matchingDeliveryOption = option;
-            });
-
-    return matchingDeliveryOption;
-
-}
-
-
 export const deliveryOptions=[
     {
         id:'1',
@@ -26,3 +13,23 @@ export const deliveryOptions=[
         priceCents: 999
     },
 ]
+export function getDeliveryOptionOb(cartDeliveryOptionId){
+    let matchingDeliveryOption;
+
+        deliveryOptions.forEach((option)=>{
+            if(option.id === cartDeliveryOptionId)
+                matchingDeliveryOption = option;
+            });
+
+    return matchingDeliveryOption;
+
+}
+
+export function calculateDeliveryDate(option){
+    const today = dayjs();
+    const deliveryDate = today.add(option.deliveryDays, 'days');
+    return deliveryDate;
+
+}
+
+
