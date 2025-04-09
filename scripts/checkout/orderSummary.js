@@ -9,8 +9,8 @@ import {renderPaymentSummary} from './paymentSummary.js';
 import {renderCheckoutHeader} from './checkoutHeader.js';
 isSatSun();
 
-
 function displayCartSummary(){
+    
     let cartSummaryHTML='';
     
 
@@ -92,7 +92,8 @@ function displayCartSummary(){
 function deliveryOptionHTML(productsItem,cart){
     let html = ''
     deliveryOptions.forEach((option)=>{
-        const dateString = calculateDeliveryDate(option);
+        const dateString = calculateDeliveryDate(option).format('dddd, MMMM, D');
+
 
         const price = `$${formatCurrency(option.priceCents)}` || 'FREE';
 
@@ -288,6 +289,7 @@ export function mainHTML(){
     iteringAddEventOnClickUpdateQuantity();
     iteringAddEventOnClickSaveQuantity();
     iteringAddEventOnClickDate()
+    
 };
 
 
