@@ -9,7 +9,7 @@ import {renderPaymentSummary} from './paymentSummary.js';
 import {renderCheckoutHeader} from './checkoutHeader.js';
 isSatSun();
 
-function displayCartSummary(){
+export function displayCartSummary(){
     
     let cartSummaryHTML='';
     
@@ -36,7 +36,7 @@ function displayCartSummary(){
 
 
                 cartSummaryHTML+= `
-                    <div class="cart-item-container js-cart-item-container-${productsItem.id}">
+                    <div class="cart-item-container js-cart-item-container js-cart-item-container-${productsItem.id}">
                         <div class="delivery-date">
                             Delivery date: ${dateString}
                         </div>
@@ -51,7 +51,7 @@ function displayCartSummary(){
                             <div class="product-price">
                                 $${formatCurrency(productsItem.priceCents)}
                             </div>
-                            <div class="product-quantity">
+                            <div class="product-quantity js-product-quantity-${cartItem.productId}">
                             <span>
                                 Quantity: <span class="quantity-label js-quantity-label" data-product-id-quantity=${cartItem.productId} >${cartItem.quantity}</span>
                             </span>
@@ -63,7 +63,7 @@ function displayCartSummary(){
                                     save
                                 </span>
                             </input>
-                            <span class="delete-quantity-link link-primary js-delete-link" data-delete-id=${cartItem.productId}>
+                            <span class="delete-quantity-link link-primary js-delete-link js-delete-link-${cartItem.productId}" data-delete-id=${cartItem.productId}>
                                 Delete
                             </span>
                             </div>
@@ -124,7 +124,7 @@ function deliveryOptionHTML(productsItem,cart){
 }
 
 
-function iteringAddEventOnClickDelete(){
+export function iteringAddEventOnClickDelete(){
     document.querySelector('.js-order-summary').addEventListener('click',(event)=>{
         if(event.target.classList.contains('js-delete-link')){
             let dataIdElement = event.target.dataset.deleteId;
