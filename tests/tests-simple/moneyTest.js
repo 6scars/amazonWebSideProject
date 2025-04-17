@@ -24,3 +24,22 @@ if(formatCurrency(2095.5) === '20.96'){
     console.log('failed')
 }
 
+
+
+console.log('rounds down to the nearest cent');
+if(formatCurrency(2000.4) === '20.00'){
+    console.log('passed');
+}else{
+    console.log('failed')
+}
+
+
+console.log('rounds down negative number to the nearest cent');
+if(formatCurrency(-2000.4) === '-20.00'){
+    console.log('passed');
+}else{
+    console.log('failed')
+}
+
+
+
