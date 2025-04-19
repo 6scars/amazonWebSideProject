@@ -1,4 +1,4 @@
-import {addToCart, cart, loadFromStorage, removeFromCart} from '../../data/cart.js'
+import {addToCart, cart, loadFromStorage, removeFromCart, updateDeliveryOption} from '../../data/cart.js'
 import {products} from '../../data/products.js'
 
 describe('test suite: addToCart', ()=>{
@@ -109,3 +109,51 @@ describe('test suite: removeFromCart', ()=>{
 
 
 });
+
+describe("updateDeliveryFunction",()=>{
+    beforeEach(()=>{
+        spyOn(localStorage,'setItem');
+        spyOn(localStorage,'getItem').and.callFake(()=>{
+            return JSON.stringify([{
+                productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                quantity: 2,
+                deliveryOptionId: '1'
+              },{
+                productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+                quantity: 1,
+                deliveryOptionId: '2'
+              }]);
+              
+        })
+        loadFromStorage();
+    })
+
+    it('updates delivery option in the cart',()=>{
+        
+        updateDeliveryOption('e43638ce-6aa0-4b85-b27f-e1d07eb678c6', '2')
+        expect(cart[0].deliveryOptionId).toEqual('2')
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart',JSON.stringify(cart))
+    })
+
+
+    it('updates the delivery option of a product that doesnt exist in the cart',()=>{
+        updateDeliveryOption('e43638ce-6aa0-4b85-b27f-e1d07eb678c16', '3')
+        expect(cart.length).toEqual(2)
+        
+        let temp = false;
+        cart.forEach((item)=>{
+            if(item ==='e43638ce-6aa0-4b85-b27f-e1d07eb678c16'){
+                temp == true;
+            }
+        })
+        expect(temp).toEqual(false)
+        expect(localStorage.setItem).toHaveBeenCalledTimes(0)
+    })
+
+    it('updates the delivery option(which doesnt exist) of a product that exists in the cart',()=>{
+        updateDeliveryOption('e43638ce-6aa0-4b85-b27f-e1d07eb678c6', '5')
+        expect(cart[0].deliveryOptionId).toEqual('1')
+        expect(localStorage.setItem).toHaveBeenCalledTimes(0)
+    })
+
+})

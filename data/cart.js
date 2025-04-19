@@ -86,16 +86,22 @@ export function overwriteQuantityInCart(prodId, containerElement, quantity){
 
 
 export function updateDeliveryOption(productId, deliveryOptionId){
-  let matchingItem;
+  if(['1','2','3'].includes(deliveryOptionId)){
+    let matchingItem;
 
-  cart.forEach((cartItem)=>{
+    cart.forEach((cartItem)=>{
     if(cartItem.productId === productId){
       matchingItem = cartItem;
-    };
-  });
+      matchingItem.deliveryOptionId = deliveryOptionId;
+      saveToStorage();
+      }
+    });
 
-  matchingItem.deliveryOptionId = deliveryOptionId;
-  saveToStorage();
+  }
+  
+
+  
+  
 };
 
 export function quantityInCart(){

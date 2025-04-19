@@ -1,4 +1,4 @@
-import {displayCartSummary, iteringAddEventOnClickDelete} from '../../scripts/checkout/orderSummary.js';
+import {displayCartSummary, iteringAddEventOnClickDelete, iteringAddEventOnClickDate} from '../../scripts/checkout/orderSummary.js';
 import {loadFromStorage, cart} from '../../data/cart.js'
 
 
@@ -30,9 +30,9 @@ describe('test suite: displayCartSummary', ()=>{
 
     });
 
-    afterEach(()=>{
-        document.querySelector('.js-test-container').innerHTML=" ";
-    })
+    // afterEach(()=>{
+    //     document.querySelector('.js-test-container').innerHTML=" ";
+    // })
     
 
 
@@ -82,6 +82,25 @@ describe('test suite: displayCartSummary', ()=>{
         
 
     });
+
+    it("updating the delivery option",()=>{
+        iteringAddEventOnClickDate()
+        let element = document.querySelector(`.js-deliver-option-input-${productId1}-3`);
+        element.click()
+        // rElement.click()
+
+        expect(element.checked).toEqual(true)
+        expect(cart.length).toEqual(2);
+        expect(cart[0].deliveryOptionId).toEqual('3');
+        let shiAnHan = document.querySelector(".js-shipping-and-handling").innerHTML
+        let totOrd = document.querySelector('.js-order-total').innerHTML
+        expect(shiAnHan).toEqual('$14.98');
+        expect(totOrd).toEqual('$63.50')
+
+
+
+        //expect(rElement.)
+    })
 
 
 

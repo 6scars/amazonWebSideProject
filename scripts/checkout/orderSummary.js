@@ -104,10 +104,10 @@ function deliveryOptionHTML(productsItem,cart){
 
         html += 
         `
-                <div class="delivery-option js-delivery-option"
+                <div class="delivery-option js-delivery-option js-deliver-option-${productsItem.id}-${option.id}"
                     data-product-id="${productsItem.id}"
                     data-delivery-option-id="${option.id}">
-                    <input type="radio" ${isChecked ? 'checked': ''} class="delivery-option-input" name="delivery-option-${productsItem.id}">
+                    <input type="radio" ${isChecked ? 'checked': ''} class="delivery-option-input js-deliver-option-input-${productsItem.id}-${option.id}">
                 <div>
                 <div class="delivery-option-date">
                     ${dateString}
@@ -268,7 +268,7 @@ function reattachEventListeners() {
 }
 
     
-function iteringAddEventOnClickDate(){
+export function iteringAddEventOnClickDate(){
     document.querySelectorAll('.js-delivery-option').forEach((element)=>{
         element.addEventListener('click',()=>{
             const {productId, deliveryOptionId} = element.dataset;
