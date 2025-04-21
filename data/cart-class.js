@@ -1,11 +1,16 @@
 import {loopCartProd} from './products.js'
-function Cart(localStorageKey){
-  const cart = {
-    cartItems: undefined,
+class Cart{
+    cartItems;
+    #localStorageKey;
 
 
-    loadFromStorage(){
-        this.cartItems = JSON.parse(localStorage.getItem(localStorageKey)) ;
+    constructor(Key){
+        this.#localStorageKey = Key;
+        this.#loadFromStorage();
+    }
+
+    #loadFromStorage(){
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) ;
       
         if(!this.cartItems){
           this.cartItems = [{
@@ -20,9 +25,9 @@ function Cart(localStorageKey){
         
           this.saveToStorage();
         } 
-      },
+      };
 
-    
+
       addToCart(productId){
         let matchingItem=NaN;
         this.cartItems.forEach((thing)=>{
@@ -45,16 +50,9 @@ function Cart(localStorageKey){
                   deliveryOptionId: '1'
           });
         };
-        
-        
-        
-    
-    
-    
     
         this.saveToStorage();
-    },
-    
+    };
 
 
 
@@ -70,16 +68,14 @@ function Cart(localStorageKey){
         this.cartItems = newCart;
       
         this.saveToStorage();
-      },
-      
+      };
 
-      
-    saveToStorage(){
-        localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
+
+      saveToStorage(){
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
         //cart = JSON.parse(localStorage.getItem('cart'));
     
-    },  
-
+    };
 
 
 
@@ -94,8 +90,10 @@ function Cart(localStorageKey){
         
             };
         });
-    },
-          
+    };
+
+
+
 
     updateDeliveryOption(productId, deliveryOptionId){
         if(['1','2','3'].includes(deliveryOptionId)){
@@ -110,35 +108,22 @@ function Cart(localStorageKey){
           });
       
         }       
-      },
-      
-    quantityInCart(){
+      };
+
+      quantityInCart(){
         let quantity =0;
         this.cartItems.forEach((item)=>{
           quantity += item.quantity;
         })
         return quantity;
     }
-  
 
-};
-
-  return cart
-};
+}
 
 
+const cart = new Cart('cart-oop');
+const cart2 = new Cart('cart-business');
 
-
-
-
-cart.loadFromStorage();
-cart2.loadFromStorage();
 console.log(cart);
 console.log(cart2);
-
-
-
-
-
-
-
+console.log(cart2 instanceof Cart);
