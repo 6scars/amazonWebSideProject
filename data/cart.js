@@ -24,7 +24,7 @@ export function loadFromStorage(){
 
 
 
-export function addToCart(productId){
+export function addToCart(productId,quant=1){
     let matchingItem=NaN;
     cart.forEach((thing)=>{
       if(thing.productId === productId){
@@ -33,12 +33,12 @@ export function addToCart(productId){
     });
 
     if(matchingItem){
-      matchingItem.quantity++;
+      matchingItem.quantity+=quant;
     }else{
       cart.push(
             {
               productId: productId,
-              quantity: 1,
+              quantity: quant,
               deliveryOptionId: '1'
       });
     };

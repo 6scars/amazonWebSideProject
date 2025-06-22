@@ -28,7 +28,7 @@ products.forEach((content)=>{
             ${content.getPrice()}
           </div>
 
-          <div class="product-quantity-container">
+          <div class="product-quantity-container" data-product-id = "${content.id}" >
             <select>
               <option selected="" value="1">1</option>
               <option value="2">2</option>
@@ -64,9 +64,14 @@ products.forEach((content)=>{
 
 function addEventToButtons(){document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
     button.addEventListener('click',()=>{
+      
       const productId = button.dataset.productId;
+      const quantSelected = parseInt(document.querySelector(
+        `.product-quantity-container[data-product-id="${button.dataset.productId}"]`).querySelector('select').value);
+        console.log(typeof(quantSelected));
+  
 
-      addToCart(productId);
+      addToCart(productId,quantSelected);
       document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
 
   
