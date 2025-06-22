@@ -63,6 +63,14 @@ class Clothing extends Product{
 }
 
 
+const object3 = {
+  metohd: ()=>{
+    console.log(this);
+  }
+}
+
+object.metohd();
+
 
 export const products = [{
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
