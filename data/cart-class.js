@@ -1,4 +1,7 @@
-import {loopCartProd} from './products.js'
+import {loopCartProd} from './products.js';
+
+
+
 class Cart{
     cartItems;
     #localStorageKey;
@@ -28,31 +31,30 @@ class Cart{
       };
 
 
-      addToCart(productId){
-        let matchingItem=NaN;
-        this.cartItems.forEach((thing)=>{
-          if(thing.productId === productId){
-            matchingItem = thing;
-          };
-        });
-        
-
-
-        let ob = loopCartProd(productId);
-        if(matchingItem){
-          matchingItem.quantity++;
-        }else if(ob){
-          
-          this.cartItems.push(
-                {
-                  productId: productId,
-                  quantity: 1,
-                  deliveryOptionId: '1'
+      addToCart(productId,quant=1){
+          let matchingItem=NaN;
+          this.cartItems.forEach((thing)=>{
+            if(thing.productId === productId){
+              matchingItem = thing;
+            };
           });
-        };
-    
-        this.saveToStorage();
-    };
+      
+          if(matchingItem){
+            matchingItem.quantity+=quant;
+          }else{
+            this.cartItems.push(
+                  {
+                    productId: productId,
+                    quantity: quant,
+                    deliveryOptionId: '1'
+            });
+          };
+      
+      
+      
+      
+          this.saveToStorage();
+      };
 
 
 
@@ -80,7 +82,7 @@ class Cart{
 
 
     overwriteQuantityInCart(prodId, containerElement, quantity){
-        this.cartitems.forEach((cartItem)=>{
+        this.cartItems.forEach((cartItem)=>{
             if(cartItem.productId === prodId){
                 cartItem.quantity = quantity;
                 
@@ -117,13 +119,6 @@ class Cart{
         })
         return quantity;
     }
-
 }
+export let cart = new Cart('kart');
 
-
-const cart = new Cart('cart-oop');
-const cart2 = new Cart('cart-business');
-
-console.log(cart);
-console.log(cart2);
-console.log(cart2 instanceof Cart);

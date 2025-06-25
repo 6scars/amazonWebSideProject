@@ -1,4 +1,4 @@
-import {cart, addToCart} from '../data/cart.js';
+import {cart} from '../data/cart-class.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import {updateCartQuantity} from './utils/quantity.js';
@@ -69,9 +69,10 @@ function addEventToButtons(){document.querySelectorAll('.js-add-to-cart').forEac
       const quantSelected = parseInt(document.querySelector(
         `.product-quantity-container[data-product-id="${button.dataset.productId}"]`).querySelector('select').value);
         console.log(typeof(quantSelected));
+        console.log(quantSelected);
   
 
-      addToCart(productId,quantSelected);
+      cart.addToCart(productId, quantSelected);
       document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
 
   

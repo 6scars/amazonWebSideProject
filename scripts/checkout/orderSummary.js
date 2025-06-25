@@ -1,4 +1,4 @@
-import {cart, removeFromCart, overwriteQuantityInCart, updateDeliveryOption} from '../../data/cart.js';
+import {cart} from '../../data/cart-class.js';
 import {products} from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import {updateCartQuantity} from '../utils/quantity.js';
@@ -14,7 +14,7 @@ export function displayCartSummary(){
     let cartSummaryHTML='';
     
 
-    cart.forEach((cartItem)=>{
+    cart.cartItems.forEach((cartItem)=>{
         products.forEach((productsItem)=>{
             if(cartItem.productId === productsItem.id){
                 
@@ -129,7 +129,7 @@ export function iteringAddEventOnClickDelete(){
         if(event.target.classList.contains('js-delete-link')){
             let dataIdElement = event.target.dataset.deleteId;
 
-            removeFromCart(dataIdElement);
+            cart.removeFromCart(dataIdElement);
             displayCartSummary();
             displayQuantityInHeader();
             renderPaymentSummary();
@@ -186,7 +186,7 @@ function iteringAddEventOnClickSaveQuantity(){
         if(!(quantity > 0  && quantity < 1000))
             return;
 
-        overwriteQuantityInCart(prodId, containerElement, quantity);
+        cart.overwriteQuantityInCart(prodId, containerElement, quantity);
         displayQuantityInHeader(); 
         renderPaymentSummary();
         
@@ -272,7 +272,7 @@ export function iteringAddEventOnClickDate(){
     document.querySelectorAll('.js-delivery-option').forEach((element)=>{
         element.addEventListener('click',()=>{
             const {productId, deliveryOptionId} = element.dataset;
-            updateDeliveryOption(productId, deliveryOptionId);
+            cart.updateDeliveryOption(productId, deliveryOptionId);
             displayCartSummary();
             reattachEventListeners();
             renderPaymentSummary();
