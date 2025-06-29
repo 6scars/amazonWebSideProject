@@ -128,6 +128,7 @@ export function loadProductsFetch(){
   ).then((response)=>{
     return response.json();
   }).then((data)=>{
+    console.log('load products');
     products = data.map((item)=>{
         if(item.type === 'clothing'){
           return new Clothing(item);

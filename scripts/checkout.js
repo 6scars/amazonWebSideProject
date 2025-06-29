@@ -7,6 +7,27 @@ import {loadCart} from '../data/cart-class.js'
 // import '../data/backend-practice.js';
 
 
+async function loadPage(){
+    await loadProductsFetch();
+
+   const value =  await new Promise ((resolve)=>{
+        loadCart(()=>{
+            resolve('valuexD');
+        });
+    });
+
+    console.log(value)
+
+
+
+    mainHTML();
+     renderPaymentSummary();
+     renderCheckoutHeader();
+}
+loadPage();
+
+/*
+
 Promise.all([
     loadProductsFetch().then(()=>{
         return 'value1'
@@ -19,12 +40,11 @@ Promise.all([
     })
 
 ]).then((value)=>{
-    console.log(value);
     mainHTML();
      renderPaymentSummary();
      renderCheckoutHeader();
 })
-
+*/
 
 /*
 new Promise((resolve)=>{
