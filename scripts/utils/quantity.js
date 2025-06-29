@@ -4,7 +4,6 @@ export function updateCartQuantity(){
     let quantityCart=0;
       cart.cartItems.forEach((cartItem)=>{
         quantityCart += cartItem.quantity;
-        console.log(cartItem);
       });
       
       return quantityCart;

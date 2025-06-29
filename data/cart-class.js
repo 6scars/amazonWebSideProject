@@ -9,10 +9,10 @@ class Cart{
 
     constructor(Key){
         this.#localStorageKey = Key;
-        this.#loadFromStorage();
+        this.loadFromStorage();
     }
 
-    #loadFromStorage(){
+    loadFromStorage(){
         this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) ;
       
         if(!this.cartItems){
@@ -120,7 +120,8 @@ class Cart{
         return quantity;
     }
 }
-export let cart = new Cart('kart');
+export let cart = new Cart('cart');
+
 
 export function loadCart(fun){
   

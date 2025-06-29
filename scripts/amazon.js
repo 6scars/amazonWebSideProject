@@ -1,10 +1,17 @@
 import {cart} from '../data/cart-class.js';
-import {products,loadProducts} from '../data/products.js';
+import {products, loadProductsFetch} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import {updateCartQuantity} from './utils/quantity.js';
 
-loadProducts(loadProductsGrid);
-function loadProductsGrid(){
+new Promise(()=>{
+  loadProductsFetch().then(()=>{
+    loadProductsGrid();
+  }).catch(()=>{
+    return 'promise amazon.js'
+  })
+})
+
+export function loadProductsGrid(){
   let productsHtml = '';
   let timeoutId;
   products.forEach((content)=>{
@@ -95,7 +102,6 @@ function loadProductsGrid(){
       });
     });
   };
-
 
 
 

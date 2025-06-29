@@ -1,4 +1,5 @@
 import {formatCurrency} from '../scripts/utils/money.js';
+import {loadProductsGrid} from '../scripts/amazon.js';
 
 
 export function loopCartProd(productId){
@@ -91,6 +92,7 @@ export class Appliance extends Product{
 
 export let products=[];
 
+/*
 export function loadProducts(fun){
   
   const xhr = new XMLHttpRequest();
@@ -118,6 +120,31 @@ export function loadProducts(fun){
 
 
 }
+*/
+
+export function loadProductsFetch(){
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response)=>{
+    return response.json();
+  }).then((data)=>{
+    products = data.map((item)=>{
+        if(item.type === 'clothing'){
+          return new Clothing(item);
+        }else if(item.type === 'appliance'){
+          return new Appliance(item);
+        }else{
+          return new Product(item);
+        };     
+    });
+  })
+
+  
+  return promise;
+};
+
+
+
  
 
 /*
