@@ -115,11 +115,17 @@ export function loadProducts(fun){
     fun();
 
   });
-  xhr.open('GET','https://supersimplebackend.dev/products');
+
+  xhr.addEventListener('error', (error)=>{
+    console.log(error);
+  })
+
+  xhr.open('GET','https://error.supersimplebackend.dev/products');
   xhr.send();
 
 
 }
+loadProducts();
 */
 
 export function loadProductsFetch(){
@@ -137,8 +143,12 @@ export function loadProductsFetch(){
         }else{
           return new Product(item);
         };     
+      });
+
+      console.log('loadProducts')
+    }).catch((error)=>{
+      console.log(error);
     });
-  })
 
   
   return promise;
