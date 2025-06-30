@@ -123,15 +123,23 @@ class Cart{
 export let cart = new Cart('cart');
 
 
-export function loadCart(fun){
+// export function loadCart(fun){
   
-  const xhr = new XMLHttpRequest();
+//   const xhr = new XMLHttpRequest();
 
-  xhr.addEventListener('load',()=>{
-    console.log(xhr.response);
-    fun();
+//   xhr.addEventListener('load',()=>{
+//     console.log(xhr.response);
+//     fun();
+//   });
+//   xhr.open('GET','https://supersimplebackend.dev/cart');
+//   xhr.send();
+
+// }
+
+
+export async function loadCartFetch(fun){
+  const promise = await fetch('https://supersimplebackend.dev/cart').then((response)=>{
+    return response.text();
   });
-  xhr.open('GET','https://supersimplebackend.dev/cart');
-  xhr.send();
-
+  console.log(promise);
 }
