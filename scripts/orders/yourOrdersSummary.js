@@ -68,7 +68,7 @@ function details(list){
                     </div>
 
                     <div class="product-actions">
-                        <a href="tracking.html?orderId=123&productId=456">
+                        <a href="tracking.html?orderId=${list.id}&productId=${product.id}">
                             <button class="track-package-button button-secondary">
                                 Track package
                             </button>
