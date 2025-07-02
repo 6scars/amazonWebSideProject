@@ -8,3 +8,7 @@ export function updateCartQuantity(){
       
       return quantityCart;
   };
+
+export function updateCartQuantityHeader(){
+  document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
+}

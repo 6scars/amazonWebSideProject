@@ -61,7 +61,7 @@ function details(list){
                 <div class="product-quantity">
                     Quantity: ${orderPro.quantity}
                 </div>
-                    <button class="buy-again-button button-primary">
+                    <button class="buy-again-button button-primary js-buy-again-button" data-product-id="${product.id}">
                         <img class="buy-again-icon" src="images/icons/buy-again.png">
                         <span class="buy-again-message">Buy it again</span>
                     </button>

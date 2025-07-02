@@ -21,8 +21,8 @@ async function loadPage(){
 
 
     mainHTML();
-     renderPaymentSummary();
-     renderCheckoutHeader();
+    renderPaymentSummary();
+    renderCheckoutHeader();
 
 }
 loadPage();

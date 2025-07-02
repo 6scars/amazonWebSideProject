@@ -1,7 +1,7 @@
 import {cart} from '../data/cart-class.js';
 import {products, loadProductsFetch} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
-import {updateCartQuantity} from './utils/quantity.js';
+import {updateCartQuantity,updateCartQuantityHeader} from './utils/quantity.js';
 
 new Promise(()=>{
   loadProductsFetch().then(()=>{
@@ -71,7 +71,8 @@ export function loadProductsGrid(){
 
 
 
-  function addEventToButtons(){document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+  function addEventToButtons(){
+    document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
       button.addEventListener('click',()=>{
         
         const productId = button.dataset.productId;
@@ -80,7 +81,7 @@ export function loadProductsGrid(){
     
 
         cart.addToCart(productId, quantSelected);
-        document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
+        updateCartQuantityHeader();
 
     
         const timeoutElement = document.querySelector(`.product-${productId}`)
@@ -88,14 +89,14 @@ export function loadProductsGrid(){
         
         if(timeoutId){
           clearTimeout(timeoutId);
-          timeoutId = setTimeout(()=>{
-            timeoutElement.classList.remove('visible-added-sign');
+            timeoutId = setTimeout(()=>{
+              timeoutElement.classList.remove('visible-added-sign');
           },2000);
-        }else{
-          timeoutId = setTimeout(()=>{
-            timeoutElement.classList.remove('visible-added-sign');
-          },2000);
-        }
+          }else{
+            timeoutId = setTimeout(()=>{
+              timeoutElement.classList.remove('visible-added-sign');
+            },2000);
+          }
 
         
         
@@ -108,7 +109,7 @@ export function loadProductsGrid(){
 
 
   document.querySelector('.products-grid').innerHTML = productsHtml;
-  document.querySelector('.js-cart-quantity').innerHTML = updateCartQuantity();
+  updateCartQuantityHeader();
   addEventToButtons();
 
 
