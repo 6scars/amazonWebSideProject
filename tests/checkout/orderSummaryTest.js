@@ -10,10 +10,9 @@ describe('test suite: displayCartSummary', ()=>{
         beforeAll(()=>{
             async ()=>{
                 await loadProductsFetch();
-                
             }
-            console.log('loaded');
-        });
+            console.log(loaded);
+        })
         
         beforeEach(()=>{
             
