@@ -10,14 +10,12 @@ import {loadCartFetch} from '../data/cart-class.js'
 async function loadPage(){
     try{
         await Promise.all([
-             loadProductsFetch(),
-             loadCartFetch()
+            loadProductsFetch(),
+            loadCartFetch()
         ]);
-    } catch(error){
-        console.log(`lodaPage => Unexpected error ${error}`)
+    }catch(error){
+        console.log('error loadPage');
     }
-
-
 
 
 
@@ -25,6 +23,7 @@ async function loadPage(){
     mainHTML();
      renderPaymentSummary();
      renderCheckoutHeader();
+
 }
 loadPage();
 
