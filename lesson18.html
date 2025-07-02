@@ -83,38 +83,36 @@
         getAmaz();
 
 
+
+
+
         async function sendFetch(){
             try{
-                const response =  await fetch('https://supersimplebackend.dev/greeting',{
+                const promise = await fetch('https://supersimplebackend.dev/greeting',{
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    // body: JSON.stringify({
-                    //     name: 'marcin'
-                    // })
-                });
-
-                if(response.status >= 400){
-                    throw response;
+                        'Content-Type': 'application/txt'
+                    }
+                })
+                
+                if(promise.status >= 400){
+                    throw promise;
                 }
 
-                const text = await response.text();
+                const text = await promise.text(text);
                 console.log(text);
-
 
             }catch(error){
                 if(error.status === 400){
-                    const errResponse = await error.json();
-                    console.log(errResponse);
+                   console.log(await error.json());
                 }else{
-                    console.log('Network error. Please try again later');    
+                    console.log('Network error, try again later.')
                 }
-                
             }
-        
         }
             sendFetch();
+
+        
 
     </script>
 </body>
