@@ -2,19 +2,26 @@ import {cart} from '../data/cart-class.js';
 import {products, loadProductsFetch} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import {updateCartQuantity,updateCartQuantityHeader} from './utils/quantity.js';
+import {searchBar,searchedProducts} from './amazon/amazonSearchBar.js'
 
 new Promise(()=>{
   loadProductsFetch().then(()=>{
     loadProductsGrid();
+    searchBar();
   }).catch(()=>{
     return 'promise amazon.js'
   })
 })
 
 export function loadProductsGrid(){
+  let url = new URL(window.location.href);
+  const searchParams = url.searchParams.get('search');
+  const searchedItems =searchParams ? searchedProducts(searchParams) : products;
+  console.log(searchParams);
+  
   let productsHtml = '';
   let timeoutId;
-  products.forEach((content)=>{
+  searchedItems.forEach((content)=>{
       productsHtml+=`<div class="product-container">
             <div class="product-image-container">
               <img class="product-image" src="${content.image}">
@@ -113,6 +120,8 @@ export function loadProductsGrid(){
   addEventToButtons();
 
 
-
+  // if(searchedItems.length === 0){
+  //   console.log('empty dd')
+  // }
 
 }
